@@ -141,6 +141,7 @@ private:
   void remoteHostChanged(const QString &newRemoteHost);
   void updateIpLabel(const QStringList &addresses);
   void updateTimeoutDelay(int newDelay);
+  void showUserDocs();
 
   bool canRunCore() const;
 
@@ -200,6 +201,7 @@ private:
   QAction *m_actionStartCore = nullptr;
   QAction *m_actionRestartCore = nullptr;
   QAction *m_actionStopCore = nullptr;
+  QAction *m_actionShowDocs = nullptr;
 
   // Network monitoring
   NetworkMonitor *m_networkMonitor = nullptr;

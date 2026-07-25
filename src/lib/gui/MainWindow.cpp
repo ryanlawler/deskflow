@@ -16,6 +16,7 @@
 #include "dialogs/AboutDialog.h"
 #include "dialogs/ClientConfigDialog.h"
 #include "dialogs/FingerprintDialog.h"
+#include "dialogs/HelpDialog.h"
 #include "dialogs/ServerConfigDialog.h"
 #include "dialogs/SettingsDialog.h"
 
@@ -79,6 +80,7 @@ MainWindow::MainWindow()
       m_actionStartCore{new QAction(this)},
       m_actionRestartCore{new QAction(this)},
       m_actionStopCore{new QAction(this)},
+      m_actionShowDocs{new QAction(this)},
       m_networkMonitor{new NetworkMonitor(this)}
 {
   ui->setupUi(this);
@@ -123,6 +125,9 @@ MainWindow::MainWindow()
 
   m_actionReportBug->setIcon(QIcon::fromTheme(QStringLiteral("tools-report-bug")));
   m_actionReportBug->setMenuRole(QAction::NoRole);
+
+  m_actionShowDocs->setIcon(QIcon::fromTheme(QIcon::ThemeIcon::HelpAbout));
+  m_actionShowDocs->setMenuRole(QAction::NoRole);
 
   // Setup the Instance Checking
   // In case of a previous crash remove first
@@ -263,6 +268,7 @@ void MainWindow::connectSlots()
   connect(m_actionStartCore, &QAction::triggered, this, &MainWindow::startCore);
   connect(m_actionRestartCore, &QAction::triggered, this, &MainWindow::resetCore);
   connect(m_actionStopCore, &QAction::triggered, this, &MainWindow::stopCore);
+  connect(m_actionShowDocs, &QAction::triggered, this, &MainWindow::showUserDocs);
 
   // Mac os tray will only show a menu
   if (!deskflow::platform::isMac())
@@ -672,6 +678,7 @@ void MainWindow::createMenuBar()
   m_menuView->addAction(m_logDock->toggleViewAction());
 
   m_menuHelp->addAction(m_actionAbout);
+  m_menuHelp->addAction(m_actionShowDocs);
   m_menuHelp->addAction(m_actionReportBug);
   m_menuHelp->addSeparator();
   m_menuHelp->addAction(m_actionClearSettings);
@@ -1063,6 +1070,8 @@ void MainWindow::updateText()
   //: %1 will be the replaced with the appname
   m_actionAbout->setText(tr("About %1...").arg(kAppName));
 
+  m_actionShowDocs->setText(tr("View &Help"));
+
   //: start / restart core shortcut
   m_actionStartCore->setShortcut(QKeySequence(tr("Ctrl+S")));
   m_actionRestartCore->setShortcut(QKeySequence(tr("Ctrl+S")));
@@ -1280,6 +1289,27 @@ void MainWindow::updateIpLabel(const QStringList &addresses)
 void MainWindow::updateTimeoutDelay(int newDelay)
 {
   m_statusBar->setConnectionInterval(newDelay);
+}
+
+void MainWindow::showUserDocs()
+{
+  const QString appPath = QCoreApplication::applicationDirPath();
+  const auto buildPath = QDir::cleanPath(QString("%1/../docs/user/html/index.html").arg(appPath));
+  auto installPath = QString("%1/../share/doc/deskflow/html/index.html").arg(appPath);
+  if (deskflow::platform::isMac())
+    installPath = QString("%1/Contents/Resources/docs/html/index.html").arg(appPath);
+  else if (deskflow::platform::isWindows())
+    installPath = QString("%1/docs/html/index.html").arg(appPath);
+
+  installPath = QDir::cleanPath(installPath);
+
+  if (QFile::exists(installPath)) {
+    HelpDialog help(this->centralWidget(), QUrl::fromLocalFile(installPath));
+  } else if (QFile::exists(buildPath)) {
+    HelpDialog help(this->centralWidget(), QUrl::fromLocalFile(buildPath));
+  } else {
+    QDesktopServices::openUrl(kUrlWiki);
+  }
 }
 
 bool MainWindow::canRunCore() const
