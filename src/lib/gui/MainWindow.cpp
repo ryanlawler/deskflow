@@ -1294,12 +1294,12 @@ void MainWindow::updateTimeoutDelay(int newDelay)
 void MainWindow::showUserDocs()
 {
   const QString appPath = QCoreApplication::applicationDirPath();
-  const auto buildPath = QDir::cleanPath(QString("%1/../docs/user/html/index.html").arg(appPath));
-  auto installPath = QString("%1/../share/doc/deskflow/html/index.html").arg(appPath);
+  const auto buildPath = QDir::cleanPath(QString("%1/../docs/HelpMain.md").arg(appPath));
+  auto installPath = QString("%1/../share/doc/deskflow/HelpMain.md").arg(appPath);
   if (deskflow::platform::isMac())
-    installPath = QString("%1/Contents/Resources/docs/html/index.html").arg(appPath);
+    installPath = QString("%1/Contents/Resources/docs/HelpMain.md").arg(appPath);
   else if (deskflow::platform::isWindows())
-    installPath = QString("%1/docs/html/index.html").arg(appPath);
+    installPath = QString("%1/docs/HelpMain.md").arg(appPath);
 
   installPath = QDir::cleanPath(installPath);
 
