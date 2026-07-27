@@ -400,24 +400,28 @@ void Server::switchScreen(BaseClientProxy *dst, int32_t x, int32_t y, bool forSc
         "on switch, x (%d) is less than the left boundary dx (%d)", //
         x, dx
     );
+    x = dx;
   }
   if (y < dy) {
     LOG_WARN(
         "on switch, y (%d) is less than the top boundary dy (%d)", //
         y, dy
     );
+    y = dy;
   }
   if (x >= dx + dw) {
     LOG_WARN(
         "on switch, x (%d) exceeds the right boundary (dx + width = %d)", //
         x, dx + dw
     );
+    x = dx + dw - 1;
   }
   if (y >= dy + dh) {
     LOG_WARN(
         "on switch, y (%d) exceeds the bottom boundary (dy + height = %d)", //
         y, dy + dh
     );
+    y = dy + dh - 1;
   }
 
   assert(m_active != nullptr);
@@ -546,12 +550,12 @@ void Server::mapToPixel(const BaseClientProxy *client, Direction dir, float f, i
     using enum Direction;
   case Left:
   case Right:
-    y = static_cast<int32_t>(f * sh) + sy;
+    y = std::isfinite(f) ? static_cast<int32_t>(f * sh) + sy : sy;
     break;
 
   case Top:
   case Bottom:
-    x = static_cast<int32_t>(f * sw) + sx;
+    x = std::isfinite(f) ? static_cast<int32_t>(f * sw) + sx : sx;
     break;
 
   case NoDirection:
