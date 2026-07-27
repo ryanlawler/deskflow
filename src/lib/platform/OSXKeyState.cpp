@@ -73,6 +73,11 @@ static const KeyEntry s_controlKeys[] = {
     {kKeyF15, kVK_F15},
     {kKeyF16, kVK_F16},
 
+    // A PC keyboard's PrintScreen has no native macOS equivalent and was
+    // previously dropped. Map it to F13 (its physical position on a Mac
+    // keyboard) so it can be bound, e.g. to a screenshot shortcut.
+    {kKeyPrint, kVK_F13},
+
     {kKeyKP_0, kVK_ANSI_Keypad0},
     {kKeyKP_1, kVK_ANSI_Keypad1},
     {kKeyKP_2, kVK_ANSI_Keypad2},
