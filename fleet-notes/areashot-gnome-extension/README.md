@@ -59,3 +59,9 @@ so it needs NO animations change -- verified flash-free with animations ON. GNOM
 animations were re-enabled (enable-animations=true) on both boxes. The
 enable-animations=false trick was only ever needed for the earlier Flameshot / built-in
 GNOME-portal capture path, which is no longer used.
+
+## Update (2026-07-27, later): Flameshot removed
+Flameshot has been PURGED from both boxes (package + ~/.config/flameshot + its autostart);
+AreaShot is now the sole Linux screenshot tool. The Print custom-shortcut is renamed
+"AreaShot" (its dconf slot path is still .../flameshot/ for historical reasons -- harmless).
+`linux-flameshot-screenshots.md` is kept only as reference for a single-monitor box.
