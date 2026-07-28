@@ -58,3 +58,11 @@ Revert with `true`.
 - Linux equivalent of ShareX on the Windows side of the same fleet.
 - Because the shot lands in the clipboard, it also pastes cross-machine over the Deskflow
   KVM clipboard (subject to the receiving box's clipboard size cap).
+
+---
+## SUPERSEDED for multi-monitor (2026-07-27)
+Flameshot CANNOT draw one selection across both monitors on GNOME Wayland (Wayland has no
+union-of-outputs surface; GNOME blocks external tools from the shell capture path; even
+Flameshot v14 is one-monitor-at-a-time). Replaced by the **AreaShot GNOME Shell extension**
+(see areashot-gnome-extension/), which uses GNOME's own in-process cross-monitor selector.
+This Flameshot config still works for a single-monitor box, but the fleet now uses AreaShot.

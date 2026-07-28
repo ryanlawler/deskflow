@@ -1,0 +1,7 @@
+{
+  "uuid": "areashot@ryanlawler",
+  "name": "AreaShot",
+  "description": "Select an area spanning all monitors, save it, and copy it to the clipboard.",
+  "shell-version": ["50"],
+  "session-modes": ["user"]
+}
