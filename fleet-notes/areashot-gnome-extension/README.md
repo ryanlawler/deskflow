@@ -52,3 +52,10 @@ Verified against GNOME Shell 50.1 js/ui/screenshot.js.
 - Flameshot is left installed on the boxes as a dormant fallback; Print is repointed here.
 - The capture flash is off because GNOME animations are disabled
   (enable-animations=false) -- see linux-flameshot-screenshots.md.
+
+## Update (2026-07-27): GNOME animations stay ON
+The AreaShot extension does its OWN capture and never calls GNOME's screenshot flash,
+so it needs NO animations change -- verified flash-free with animations ON. GNOME
+animations were re-enabled (enable-animations=true) on both boxes. The
+enable-animations=false trick was only ever needed for the earlier Flameshot / built-in
+GNOME-portal capture path, which is no longer used.
